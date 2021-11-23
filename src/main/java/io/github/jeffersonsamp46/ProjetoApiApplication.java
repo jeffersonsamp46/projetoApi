@@ -1,4 +1,4 @@
-package io.github.jeffersonasmp46;
+package io.github.jeffersonsamp46;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
