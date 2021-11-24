@@ -1,12 +1,25 @@
 package io.github.jeffersonsamp46.domain.entity;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "item_pedido")
 public class ItemPedido {
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
+    @ManyToOne
+    @JoinColumn(name = "pedido_id")
     private Pedido pedido;
+
+    @ManyToOne
+    @JoinColumn(name = "produto_id")
     private Produto produto;
+
+    @Column(name = "quantidade")
     private Integer quantidade;
 
     public Integer getId() {
