@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class ProjetoApiApplication {
 
+    /*
     @Bean
     public CommandLineRunner commandLineRunner(@Autowired Clientes clientes){
         return args -> {
@@ -23,6 +24,7 @@ public class ProjetoApiApplication {
             clientes.save(p);
         };
     }
+     */
 
     public static void main(String[] args) {
         SpringApplication.run(ProjetoApiApplication.class, args);
