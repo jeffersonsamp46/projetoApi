@@ -3,16 +3,22 @@ package io.github.jeffersonsamp46.rest.controller;
 import com.sun.org.apache.regexp.internal.RE;
 import io.github.jeffersonsamp46.domain.entity.Cliente;
 import io.github.jeffersonsamp46.domain.repository.Clientes;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
-@Controller
-public class ClienteController {
+//@Controller
+@RestController // nao preciso colocar @ResponseBody em cada metodo
+@RequestMapping(value = "/api/cliente/") // nao precisa passar essa url base em todos os metodos
+public class
+ClienteController {
 
     private  Clientes clientes;
 
@@ -20,8 +26,8 @@ public class ClienteController {
         this.clientes = clientes;
     }
 
-    @GetMapping(value = "/api/cliente/{codigo}")
-    @ResponseBody
+    @GetMapping(value = "{codigo}")
+//    @ResponseBody
     public ResponseEntity getClienteById (@PathVariable("codigo") Integer id){
         Optional<Cliente> cliente = clientes.findById(id);
 
@@ -33,16 +39,16 @@ public class ClienteController {
         }
     }
 
-    @PostMapping("/api/cliente")
-    @ResponseBody
+    @PostMapping
+//    @ResponseBody
     public ResponseEntity saveCliente(@RequestBody Cliente cliente){
         Cliente clienteSalvo =  clientes.save(cliente);
 
         return ResponseEntity.ok(clienteSalvo);
     }
 
-    @DeleteMapping("/api/cliente/{codigo}")
-    @ResponseBody
+    @DeleteMapping("{codigo}")
+//    @ResponseBody
     public ResponseEntity delete(@PathVariable("codigo")  Integer id){
         Optional<Cliente> cliente = clientes.findById(id);
 
@@ -55,11 +61,20 @@ public class ClienteController {
         }
     }
 
-    @PutMapping("/api/cliente/{codigo}")
-    @ResponseBody
+    @PutMapping("{codigo}")
+//    @ResponseBody
     public ResponseEntity atualizaCliente( @PathVariable("codigo") Integer id,
                                            @RequestBody Cliente cliente){
 
+        // Método do Professor
+        return  clientes.findById(id)
+                .map(clienteExistente ->{
+                    cliente.setId(clienteExistente.getId());
+                    clientes.save(cliente);
+                    return ResponseEntity.noContent().build();
+                }).orElseGet( () -> ResponseEntity.notFound().build());
+
+        /* Minha implementacao perguntei pro professor se é gambi
         Optional<Cliente> clienteAntigo = clientes.findById(id);
         if (clienteAntigo.isPresent()){
             cliente.setId(id);
@@ -70,8 +85,23 @@ public class ClienteController {
         else {
             return ResponseEntity.notFound().build();
         }
+         */
     }
 
+
+    @GetMapping
+//    @ResponseBody
+    public ResponseEntity find(Cliente filtro){
+        ExampleMatcher exampleMatcher = ExampleMatcher
+                .matching()
+                .withIgnoreCase()
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+
+        Example example = Example.of(filtro, exampleMatcher);
+        List<Cliente> lista = clientes.findAll(example);
+
+        return ResponseEntity.ok(lista);
+    }
 
 
 }

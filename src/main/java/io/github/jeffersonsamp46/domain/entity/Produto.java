@@ -13,7 +13,7 @@ public class Produto {
     private Integer id;
 
     @Column(name="descricao")
-    private String descriacao;
+    private String descricao;
 
     @Column(name="preco_unitario")
     private BigDecimal preco;
@@ -26,12 +26,12 @@ public class Produto {
         this.id = id;
     }
 
-    public String getDescriacao() {
-        return descriacao;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setDescriacao(String descriacao) {
-        this.descriacao = descriacao;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public BigDecimal getPreco() {
