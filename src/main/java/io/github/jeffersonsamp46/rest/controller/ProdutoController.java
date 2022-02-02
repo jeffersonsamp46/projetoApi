@@ -1,11 +1,15 @@
 package io.github.jeffersonsamp46.rest.controller;
 
+import io.github.jeffersonsamp46.domain.entity.Cliente;
 import io.github.jeffersonsamp46.domain.entity.Produto;
 import io.github.jeffersonsamp46.domain.repository.Produtos;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.expression.spel.ast.OpMinus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequestMapping(value = "/api/produto")
@@ -57,5 +61,18 @@ public class ProdutoController {
         }
 
         return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping
+    public ResponseEntity findProduto(Produto filtro){
+        ExampleMatcher exampleMatcher = ExampleMatcher
+                .matching()
+                .withIgnoreCase()
+                .withStringMatcher( ExampleMatcher.StringMatcher.CONTAINING );
+
+        Example example = Example.of(filtro, exampleMatcher);
+        List<Produto> lista = produtos.findAll(example);
+
+        return ResponseEntity.ok(lista);
     }
 }
