@@ -1,14 +1,10 @@
 package io.github.jeffersonsamp46.rest.controller;
 
-import com.sun.org.apache.regexp.internal.RE;
 import io.github.jeffersonsamp46.domain.entity.Cliente;
 import io.github.jeffersonsamp46.domain.repository.Clientes;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,7 +12,7 @@ import java.util.Optional;
 
 //@Controller
 @RestController // nao preciso colocar @ResponseBody em cada metodo
-@RequestMapping(value = "/api/cliente/") // nao precisa passar essa url base em todos os metodos
+@RequestMapping("/api/clientes/") // nao precisa passar essa url base em todos os metodos
 public class
 ClienteController {
 

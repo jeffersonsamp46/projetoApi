@@ -9,9 +9,8 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-
+@NoArgsConstructor
 @Entity
 @Table(name = "cliente")
 public class Cliente {
@@ -31,11 +30,8 @@ public class Cliente {
     @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
     private Set<Pedido> pedidos;
 
-    @Override
-    public String toString() {
-        return "Cliente{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                '}';
+    public Cliente(Integer id, String nome){
+        this.id = id;
+        this.nome = nome;
     }
 }
